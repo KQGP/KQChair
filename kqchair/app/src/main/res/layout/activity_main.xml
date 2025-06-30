@@ -4,173 +4,298 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="Hello There"
-        android:textColor="#673AB7"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="?attr/textAppearanceHeadline5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Switch
-        android:id="@+id/switch_motor"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/settings_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Enable Motors"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorOutline"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/bluetoothStatusLabel"
-        android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/bluetoothStatusLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Bluetooth Status"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/switch_motor"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_motor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Enable Motors"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/bluetoothStatusLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/languageSwitch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="English"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/switch_motor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mode_selection_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Bluetooth Status"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="20sp"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorOutline"
+        app:layout_constraintTop_toBottomOf="@id/settings_card"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switch_motor" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <Switch
-        android:id="@+id/languageSwitch"
-        android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radioSound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sound Mode" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radioTilt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tilt Mode" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radioManual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Manual Mode" />
+            </RadioGroup>
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/micCard"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:checked="false"
-        android:text="English"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorOutline"
+        app:layout_constraintTop_toBottomOf="@id/mode_selection_card"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bluetoothStatusLabel" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp">
+
+            <ImageView
+                android:id="@+id/mic_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_mic"
+                app:tint="?attr/colorPrimary" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/manualControlsCard"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/languageSwitch">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/micCard"
+        app:strokeColor="?attr/colorOutline"
+        app:strokeWidth="1dp">
 
-        <RadioButton
-            android:id="@+id/radioSound"
+        <GridLayout
+            android:id="@+id/manualControls"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sound Mode" />
+            android:layout_gravity="center"
+            android:columnCount="3"
+            android:padding="16dp"
+            android:rowCount="3">
 
-        <RadioButton
-            android:id="@+id/radioTilt"
-            android:layout_width="wrap_content"
+            <Space
+                android:layout_row="0"
+                android:layout_column="0" />
+
+            <ImageButton
+                android:id="@+id/buttonForward"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:src="@drawable/ic_arrow_upward"
+                android:tint="#6750A4" />
+
+            <Space
+                android:layout_row="0"
+                android:layout_column="2" />
+
+            <ImageButton
+                android:id="@+id/buttonLeft"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="#6750A4" />
+
+            <Space
+                android:layout_row="1"
+                android:layout_column="1" />
+
+            <ImageButton
+                android:id="@+id/buttonRight"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:src="@drawable/ic_arrow_forward"
+                android:tint="#6750A4" />
+
+            <Space
+                android:layout_row="2"
+                android:layout_column="0" />
+
+            <ImageButton
+                android:id="@+id/buttonBackward"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:src="@drawable/ic_arrow_downward"
+                android:tint="#6750A4" />
+
+            <Space
+                android:layout_row="2"
+                android:layout_column="2" />
+
+        </GridLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/tiltControlsCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorOutline"
+        app:layout_constraintTop_toBottomOf="@id/mode_selection_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/tiltControls"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tilt Mode" />
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
 
-        <RadioButton
-            android:id="@+id/radioManual"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Manual Mode" />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/tiltThresholdLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Sensitivity: 4.0"
+                android:textAppearance="?attr/textAppearanceBody1" />
 
+            <com.google.android.material.slider.Slider
+                android:id="@+id/tiltThresholdSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="1.0"
+                android:valueTo="10.0"
+                android:stepSize="1.0"
+                android:value="4.0" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Centered By KQG -->
     <LinearLayout
-        android:id="@+id/manualControls"
+        android:id="@+id/by_kqg_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup">
-
-        <Button
-            android:id="@+id/buttonBackward"
-            android:layout_width="44dp"
-            android:layout_height="wrap_content"
-            android:text="⬇️" />
-
-        <Button
-            android:id="@+id/buttonLeft"
-            android:layout_width="44dp"
-            android:layout_height="wrap_content"
-            android:text="⬅️" />
-
-        <Button
-            android:id="@+id/buttonRight"
-            android:layout_width="44dp"
-            android:layout_height="wrap_content"
-            android:text="➡️" />
-
-        <Button
-            android:id="@+id/buttonForward"
-            android:layout_width="44dp"
-            android:layout_height="wrap_content"
-            android:text="⬆️" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/tiltControls"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/tiltThresholdLabel"
+            android:id="@+id/label_by"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:text="Tilt Threshold: 3.0"
-            android:textColor="@android:color/holo_green_dark"
-            android:textSize="18sp" />
+            android:text="By"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginEnd="8dp"/>
 
-        <SeekBar
-            android:id="@+id/tiltThresholdSlider"
-            android:layout_width="200dp"
+        <TextView
+            android:id="@+id/label_kqg"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:max="9"
-            android:progress="3"
-            android:stepSize="1" />
-
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:text="KQG"
+            android:textAlignment="center"
+            android:gravity="center" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/label_by"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="By"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switch_motor"
-        app:layout_constraintVertical_bias="0.915" />
-
-    <TextView
-        android:id="@+id/label_kqg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="KQG"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switch_motor"
-        app:layout_constraintVertical_bias="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

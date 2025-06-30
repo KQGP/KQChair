@@ -12,7 +12,7 @@
         android:label="KQChair"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        android:theme="@style/Theme.Wheelchair">
         <activity
             android:name="com.kqg.chair.MainActivity"
             android:exported="true">

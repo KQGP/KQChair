@@ -25,15 +25,24 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.material.radiobutton.MaterialRadioButton;
+import com.google.android.material.slider.Slider;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import android.widget.GridLayout;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private static final String TAG = "MainActivity";
@@ -43,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private TextView textView, bluetoothStatusLabel;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private Switch motorSwitch, languageSwitch;
+    private SwitchMaterial motorSwitch, languageSwitch;
     private RadioGroup radioGroup;
-    private RadioButton radioTilt, radioSound, radioManual;
-    private LinearLayout manualControls;
+    private MaterialRadioButton radioTilt, radioSound, radioManual;
+    private GridLayout manualControls;
     private SpeechRecognizer speechRecognizer;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothSocket bluetoothSocket;
@@ -57,9 +66,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor accelerometer;
     private boolean isArabic = false;
     private boolean isMoving = false;
-    private SeekBar tiltThresholdSlider;
+    private Slider tiltThresholdSlider;
     private TextView tiltThresholdLabel;
-    private float tiltThreshold = 3.0f;
+    private float tiltThreshold = 4.0f;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -89,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         radioManual = findViewById(R.id.radioManual);
         manualControls = findViewById(R.id.manualControls);
         tiltThresholdSlider = findViewById(R.id.tiltThresholdSlider);
+        tiltThresholdLabel = findViewById(R.id.tiltThresholdLabel);
+        
+        TextView labelKQG = findViewById(R.id.label_kqg);
+        labelKQG.setText(android.text.Html.fromHtml(getString(R.string.kqg_colored)));
     }
 
     private void checkAudioPermission() {
@@ -195,20 +208,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        tiltThresholdSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                tiltThreshold = 1.0f + progress;
-
-                tiltThresholdLabel.setText(String.format(isArabic ? "الحساسية: %.1f" : "Sensitivity: %.1f", tiltThreshold));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+        tiltThresholdSlider.addOnChangeListener((slider, value, fromUser) -> {
+            tiltThreshold = value;
+            tiltThresholdLabel.setText(String.format(isArabic ? "الحساسية: %.1f" : "Sensitivity: %.1f", tiltThreshold));
         });
     }
 
@@ -216,26 +218,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         boolean isMotorEnabled = motorSwitch.isChecked();
         int selectedRadioId = radioGroup.getCheckedRadioButtonId();
 
-        LinearLayout tiltControls = findViewById(R.id.tiltControls);
-        manualControls = findViewById(R.id.manualControls);
-        tiltThresholdSlider = findViewById(R.id.tiltThresholdSlider);
-        tiltThresholdLabel = findViewById(R.id.tiltThresholdLabel);
+        View manualControlsCard = findViewById(R.id.manualControlsCard);
+        View tiltControlsCard = findViewById(R.id.tiltControlsCard);
+        View micCard = findViewById(R.id.micCard);
 
-        if (tiltControls == null || manualControls == null || tiltThresholdSlider == null || tiltThresholdLabel == null) {
-            Log.e(TAG, "Some views (tiltControls, manualControls, tiltThresholdSlider, tiltThresholdLabel) are not initialized properly.");
-            return;
+        if (micCard != null) {
+            micCard.setVisibility(isMotorEnabled && selectedRadioId == R.id.radioSound ? View.VISIBLE : View.GONE);
         }
-
-        if (isMotorEnabled && selectedRadioId == R.id.radioTilt) {
-            tiltControls.setVisibility(View.VISIBLE);
-        } else {
-            tiltControls.setVisibility(View.GONE);
+        if (manualControlsCard != null) {
+            manualControlsCard.setVisibility(isMotorEnabled && selectedRadioId == R.id.radioManual ? View.VISIBLE : View.GONE);
         }
-
-        if (isMotorEnabled && selectedRadioId == R.id.radioManual) {
-            manualControls.setVisibility(View.VISIBLE);
-        } else {
-            manualControls.setVisibility(View.GONE);
+        if (tiltControlsCard != null) {
+            tiltControlsCard.setVisibility(isMotorEnabled && selectedRadioId == R.id.radioTilt ? View.VISIBLE : View.GONE);
         }
     }
 
