@@ -35,6 +35,3 @@ cd app
 ./gradlew assembleDebug
 ```
 Install the resulting APK on your phone, pair with the wheelchair Bluetooth device.
-
-## 📄 License
-No license specified.
