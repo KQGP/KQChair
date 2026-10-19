@@ -1,0 +1,8 @@
+﻿# Arduino / firmware
+*.elf
+*.hex
+*.bin
+
+# OS
+.DS_Store
+Thumbs.db
